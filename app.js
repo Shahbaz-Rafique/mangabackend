@@ -53,13 +53,18 @@ app.set('view engine', 'jade');
 
 app.use(express.json())
 app.use(bodyParser.json())
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Always serve the index.html file for any unknown paths
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 app.use(bodyParser.urlencoded({
     extended:true
 }))
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://literarylandmark.com'); // Replace with your own domain
+  res.setHeader('Access-Control-Allow-Origin', 'http://toonvortex.com'); // Replace with your own domain
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   next();
