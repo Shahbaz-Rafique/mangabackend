@@ -31,7 +31,7 @@ router.post('/',(req,res,next)=>{
                                 }
                                 else{
                                 console.log('Message sent successfully!');
-                                res.redirect(`http://localhost:3000?passreset=true`);
+                                res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com?passreset=true`);
                                 transporter.close();
                                 }
                             });
@@ -62,7 +62,7 @@ router.post('/',(req,res,next)=>{
                                         }
                                         else{
                                         console.log('Message sent successfully!');
-                                        return res.redirect(`http://localhost:3000?passreset=true`);
+                                        return res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com?passreset=true`);
                                         }
                                     });
                                     })
@@ -71,7 +71,7 @@ router.post('/',(req,res,next)=>{
                                 });
                     }
                     else{
-                        res.redirect(`http://localhost:3000/forgot-password/verification?email=${email}&id=${hashpass}&verify=false`);
+                        res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/forgot-password/verification?email=${email}&id=${hashpass}&verify=false`);
                     }
                 }
             })

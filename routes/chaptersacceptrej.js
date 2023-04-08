@@ -11,7 +11,7 @@ router.get('/',(req,res,next)=>{
         "status": Status,
     }).exec()
     .then((doc)=>{
-        res.redirect(`http://localhost:3000/manga-approval?approval=${Status}`);
+        res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/manga-approval?approval=${Status}`);
         })
     .catch((err) => {
         console.error(err);

@@ -35,7 +35,7 @@ router.post('/',upload.single("manga"),(req,res,next)=>{
             "mangaimage":fileName,
         }).exec()
                 .then((doc)=>{
-                    res.redirect('http://localhost:3000/manage-manga');
+                    res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/manage-manga');
                     })
                 .catch((err) => {
                     console.error(err);
@@ -51,7 +51,7 @@ router.post('/',upload.single("manga"),(req,res,next)=>{
             "summary":summary,
         }).exec()
                 .then((doc)=>{
-                    res.redirect('http://localhost:3000/manage-manga');
+                    res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/manage-manga');
                     })
                 .catch((err) => {
                     console.error(err);

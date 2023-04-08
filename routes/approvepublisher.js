@@ -40,7 +40,7 @@ router.get('/',(req,res,next)=>{
                   }).catch((err) => {
                       console.log(err);
                   });
-                res.redirect(`http://localhost:3000/publisher-approval?status=${status}`);
+                res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/publisher-approval?status=${status}`);
                 })
             .catch((err) => {
                 console.error(err);

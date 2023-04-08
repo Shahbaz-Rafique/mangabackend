@@ -41,7 +41,7 @@ router.post('/',upload.single("profile"),(req,res,next)=>{
             "instagram":instagram,
         }).exec()
                 .then((doc)=>{
-                    res.redirect('http://localhost:3000/publisher-profile');
+                    res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/publisher-profile');
                     })
                 .catch((err) => {
                     console.error(err);
@@ -59,7 +59,7 @@ router.post('/',upload.single("profile"),(req,res,next)=>{
             "instagram":instagram,
         }).exec()
                 .then((doc)=>{
-                    res.redirect('http://localhost:3000/publisher-profile');
+                    res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/publisher-profile');
                     })
                 .catch((err) => {
                     console.error(err);

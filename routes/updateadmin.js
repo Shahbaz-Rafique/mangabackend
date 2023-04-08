@@ -41,7 +41,7 @@ router.post('/',upload.single("profile"),(req,res,next)=>{
             "instagram":instagram,
         }).exec()
                 .then((doc)=>{
-                    res.redirect('http://localhost:3000/admin-profile');
+                    res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/admin-profile');
                     })
                 .catch((err) => {
                     console.error(err);
@@ -59,7 +59,7 @@ router.post('/',upload.single("profile"),(req,res,next)=>{
             "instagram":instagram,
         }).exec()
                 .then((doc)=>{
-                    res.redirect('http://localhost:3000/admin-profile');
+                    res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/admin-profile');
                     })
                 .catch((err) => {
                     console.error(err);

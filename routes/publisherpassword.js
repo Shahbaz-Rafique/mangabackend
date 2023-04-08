@@ -11,14 +11,14 @@ router.post('/',(req,res,next)=>{
         if(result){
             Publisher.updateOne({_id:id},{"password":hashnewpwd}).exec()
             .then((doc)=>{
-                res.redirect('http://localhost:3000/publisher-credentials?changed=true');
+                res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/publisher-credentials?changed=true');
                 })
                 .catch((err) => {
                     console.error(err);
                 });
         }
         else{
-            res.redirect('http://localhost:3000/publisher-credentials?changed=false');
+            res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/publisher-credentials?changed=false');
         }
     })
 })

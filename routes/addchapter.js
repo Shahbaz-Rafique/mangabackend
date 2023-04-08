@@ -53,7 +53,7 @@ router.post('/',multipleupload,(req,res,next)=>{
           console.log('Message sent successfully!');
           transporter.close();
       });
-        return res.redirect(`http://localhost:3000/manage-manga/add-chapters?id=${id}&manga=${manga}&add=true`);
+        return res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/manage-manga/add-chapters?id=${id}&manga=${manga}&add=true`);
        }
     })
   })

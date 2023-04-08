@@ -45,7 +45,7 @@ router.post('/',upload.single("profile"),(req,res,next)=>{
             "updatedDate":currentDate,
         }).exec()
                 .then((doc)=>{
-                    res.redirect('http://localhost:3000/view-publishers');
+                    res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/view-publishers');
                     })
                 .catch((err) => {
                     console.error(err);
@@ -65,7 +65,7 @@ router.post('/',upload.single("profile"),(req,res,next)=>{
             "updatedDate":currentDate,
         }).exec()
                 .then((doc)=>{
-                    res.redirect('http://localhost:3000/view-publishers');
+                    res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/view-publishers');
                     })
                 .catch((err) => {
                     console.error(err);

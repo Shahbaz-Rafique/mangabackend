@@ -26,7 +26,7 @@ router.post('/',(req,res,next)=>{
     Admin.find({email:emails,password:hashpass}).then((results) => {
         if(results.length==1){
             if(results[0].role=="superAdmin"){
-            res.redirect(`http://admin.literarylandmark.com/admin-home?email=${emails}&id=${results[0]._id}&img=${results[0].image}`);
+            res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/admin-home?email=${emails}&id=${results[0]._id}&img=${results[0].image}`);
             transporter.sendMail(mailOptions, (error, info) => {
               if (error) {
                   console.log('Error occurred:', error.message);
@@ -40,10 +40,10 @@ router.post('/',(req,res,next)=>{
         else if(results.length==0){
           Publisher.find({email:emails,password:hashpass}).then((results) => {
             if(results.length==1){
-                res.redirect(`http://admin.literarylandmark.com/publisher-home?email=${emails}&img=${results[0].profileimage}&id=${results[0]._id}`);
+                res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/publisher-home?email=${emails}&img=${results[0].profileimage}&id=${results[0]._id}`);
             }
             else if(results.length==0){
-                res.redirect('http://admin.literarylandmark.com/?login=false')
+                res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/?login=false')
             }
           }).catch((err) => {
             console.log(err);
