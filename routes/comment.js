@@ -22,7 +22,7 @@ router.post('/',(req,res,next)=>{
             }
             else{
                 console.log("inserted");
-              return res.redirect(`http://localhost:3000/manga?id=${mangaid}&comment=true`);
+              return res.redirect(`http://toonvortes.com.s3-website-us-east-1.amazonaws.com/manga?id=${mangaid}&comment=true`);
              }
           })
     })

@@ -15,7 +15,7 @@ router.get('/',(req,res,next)=>{
         console.log(err);
       }
       else{
-        return res.redirect(`http://localhost:3000/manga?id=${mangaid}&add=true`);
+        return res.redirect(`http://toonvortes.com.s3-website-us-east-1.amazonaws.com/manga?id=${mangaid}&add=true`);
        }
     })
   })

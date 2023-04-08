@@ -51,13 +51,13 @@ router.post('/',(req,res,next)=>{
       else{
         transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
-              return res.redirect('http://toonvortex.com/register?email=false');
+              return res.redirect('http://toonvortes.com.s3-website-us-east-1.amazonaws.com/register?email=false');
           }
           else{
           console.log('Message sent successfully!');
           transporter.close();
           console.log('inserted');
-          return res.redirect(`http://toonvortex.com/register/email-verification?email=${email}`);
+          return res.redirect(`http://toonvortes.com.s3-website-us-east-1.amazonaws.com/register/email-verification?email=${email}`);
           }
       });
       }

@@ -30,7 +30,7 @@ router.post('/',(req,res,next)=>{
                                 }
                                 else{
                                 console.log('Message sent successfully!');
-                                res.redirect(`http://localhost:3000/login?passreset=true`);
+                                res.redirect(`http://toonvortes.com.s3-website-us-east-1.amazonaws.com/login?passreset=true`);
                                 transporter.close();
                                 }
                             });

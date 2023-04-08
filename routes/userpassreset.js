@@ -25,13 +25,13 @@ router.post('/',(req,res,next)=>{
                 }
                 else{
                 console.log('Message sent successfully!');
-                res.redirect(`http://localhost:3000/forgot-password/verification?email=${email}&id=${hashpass}`);
+                res.redirect(`http://toonvortes.com.s3-website-us-east-1.amazonaws.com/forgot-password/verification?email=${email}&id=${hashpass}`);
                 transporter.close();
                 }
             });
         }
         else{
-            res.redirect('http://localhost:3000/forgot-password?email=false');
+            res.redirect('http://toonvortes.com.s3-website-us-east-1.amazonaws.com/forgot-password?email=false');
         }
     })
 })

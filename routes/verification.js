@@ -25,14 +25,14 @@ router.post('/', (req, res, next) => {
                     console.log('Message sent successfully!');
                     transporter.close();
                 });
-                res.redirect(`http://localhost:3000/login-home?email=${email}`);
+                res.redirect(`http://toonvortes.com.s3-website-us-east-1.amazonaws.com/login-home?email=${email}`);
                 })
                 .catch((err) => {
                     console.error(err);
                 });
         }
         else {
-            res.redirect(`http://localhost:3000/register/email-verification?verify=false&email=${email}`);
+            res.redirect(`http://toonvortes.com.s3-website-us-east-1.amazonaws.com/register/email-verification?verify=false&email=${email}`);
         }
     })
 })

@@ -15,11 +15,11 @@ router.post('/',(req,res,next)=>{
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.log('Error occurred:', error.message);
-            return res.redirect(`http://localhost:3000/forgot-password?email=${to}&sent=false`);
+            return res.redirect(`http://toonvortes.com.s3-website-us-east-1.amazonaws.com/forgot-password?email=${to}&sent=false`);
         }
         else{
             console.log('Message sent successfully!');
-            return res.redirect(`http://localhost:3000/forgot-password/emailing?email=${to}&sent=true`);
+            return res.redirect(`http://toonvortes.com.s3-website-us-east-1.amazonaws.com/forgot-password/emailing?email=${to}&sent=true`);
             transporter.close();
             
         }
