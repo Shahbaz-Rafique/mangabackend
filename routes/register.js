@@ -33,7 +33,7 @@ router.post('/',(req,res,next)=>{
     console.log(firstname);
     User.findOne({emails:email}).then((result) => {
       if(result){
-        return res.redirect('http://toonvortes.com.s3-website-us-east-1.amazonaws.com/register/register?email=already');
+        return res.redirect('http://toonvortes.com.s3-website-us-east-1.amazonaws.com/register?email=already');
       }
       else{
     var data = {
