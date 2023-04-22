@@ -45,6 +45,7 @@ router.post('/',multipleupload,(req,res,next)=>{
     var facebook=req.body.facebook;
     var twitter=req.body.twitter;
     var instagram=req.body.insta;
+    var role=req.query.role;
     var imagefile=req.files.profile[0].filename;
     var examplefile=req.files.example[0].filename;
     var password=generateRandomPassword();
@@ -66,13 +67,14 @@ router.post('/',multipleupload,(req,res,next)=>{
       "registeredDate":currentDate,
       "updatedDate":currentDate,
       "workexample":examplefile,
+      "Role":role,
       "status":status,
     };
     let mailOptions = {
       from: 'Manga Support',
       to: email,
-      subject: 'Registered as a Publisher!',
-      html: '<p>Hy '+name+'</p><p>you have been registered as a Publisher of Mangas World. You credentials are following</p><p>Username: '+email+'</p><p>Password: '+password+'</p><p>Use this login credential to open your mangas world publisher account.',
+      subject: `Registered as a ${role}!`,
+      html: '<p>Hy '+name+'</p><p>you have been registered as a '+ role +' of Mangas World. You credentials are following</p><p>Username: '+email+'</p><p>Password: '+password+'</p><p>Use this login credential to open your mangas world publisher account.',
     };
     db.collection('publishers').insertOne(data, (err, collection) => {
       if(err){

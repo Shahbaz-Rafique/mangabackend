@@ -22,8 +22,9 @@ router.post('/',upload.single("manga"),(req,res,next)=>{
     var name=req.body.name;
     var author=req.body.author;
     var artist=req.body.artist;
-    var generes=req.body.generes;
-    var summary=req.body.summary;
+    var generes=req.query.genere;
+    var summary=req.query.summary;
+    console.log(generes);
     if(req.file){
         const fileName = req.file.filename;
         Mangas.updateOne({_id:ID},{
@@ -42,7 +43,6 @@ router.post('/',upload.single("manga"),(req,res,next)=>{
                 });
     }
     else{
-        console.log('else');
         Mangas.updateOne({_id:ID},{
             "name": name,
             "author": author,

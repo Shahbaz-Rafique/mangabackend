@@ -28,6 +28,7 @@ router.post('/',upload.single("profile"),(req,res,next)=>{
     var facebook=req.body.facebook;
     var twitter=req.body.twitter;
     var instagram=req.body.instagram;
+    var role=req.query.role;
     const currentDate = new Date().toISOString().split('T')[0]
     if(req.file){
         const fileName = req.file.filename;
@@ -43,9 +44,10 @@ router.post('/',upload.single("profile"),(req,res,next)=>{
             "twitter":twitter,
             "instagram":instagram,
             "updatedDate":currentDate,
+            "Role":role,
         }).exec()
                 .then((doc)=>{
-                    res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/view-publishers');
+                    res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/view-publishers?update=true');
                     })
                 .catch((err) => {
                     console.error(err);
@@ -63,9 +65,10 @@ router.post('/',upload.single("profile"),(req,res,next)=>{
             "twitter":twitter,
             "instagram":instagram,
             "updatedDate":currentDate,
+            "Role":role,
         }).exec()
                 .then((doc)=>{
-                    res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/view-publishers');
+                    res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/view-publishers?update=true');
                     })
                 .catch((err) => {
                     console.error(err);

@@ -32,6 +32,8 @@ router.post('/',multipleupload,(req,res,next)=>{
       "chapterfile":chapterfile,
       "date":currentDate,
       "status":"inactive",
+      "acceptcount":"0",
+      "rejectcount":"0",
     };
     db.collection('chapters').insertOne(data, (err, collection) => {
       if(err){

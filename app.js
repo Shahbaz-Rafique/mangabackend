@@ -43,9 +43,17 @@ var passresetRouter= require('./routes/userpassreset');
 var resetverifyRouter= require('./routes/resetverify'); 
 var adminpasschangeRouter= require('./routes/adminpasschange'); 
 var adminresetRouter= require('./routes/adminreset'); 
+var addcarouselRouter= require('./routes/addcarosel'); 
+var getcarouselRouter= require('./routes/getcarousel'); 
+var getusersRouter= require('./routes/getusers'); 
+var freezeRouter= require('./routes/freeze'); 
+var deleteuserRouter= require('./routes/deleteuser'); 
+var getcommentRouter= require('./routes/getcomment'); 
+var deletecommentRouter= require('./routes/deletecomment'); 
 
 var app = express();
 var cors=require('cors');
+app.use(cors());
 var db=require('./mongodb/db');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -59,7 +67,7 @@ app.use(bodyParser.urlencoded({
 }))
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://toonvertex.com'); // Replace with your own domain
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Replace with your own domain
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   next();
@@ -71,7 +79,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -112,6 +119,13 @@ app.use('/passwordreset', passresetRouter);
 app.use('/resetverify', resetverifyRouter);
 app.use('/adminpasschange', adminpasschangeRouter);
 app.use('/adminreset', adminresetRouter);
+app.use('/addcarousel', addcarouselRouter);
+app.use('/getcarousel', getcarouselRouter);
+app.use('/getusers', getusersRouter);
+app.use('/freeze', freezeRouter);
+app.use('/deleteuser', deleteuserRouter);
+app.use('/getcomment', getcommentRouter);
+app.use('/deletecomment', deletecommentRouter);
 
 // error handler
 app.listen(8080);

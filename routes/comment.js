@@ -5,10 +5,13 @@ var {User}=require('../models/schemas');
 
 router.post('/',(req,res,next)=>{
     var mangaid=req.query.id;
+    var manga=req.query.manga;
     var email=req.query.email;
     var comment=req.body.comment;
     const currentDate = new Date();
+    console.log(email);
     User.findOne({emails:email}).then((result)=>{
+      console.log(result);
         var data = {
             "mangaid":mangaid,
             "email": email,
@@ -22,7 +25,7 @@ router.post('/',(req,res,next)=>{
             }
             else{
                 console.log("inserted");
-              return res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/manga?id=${mangaid}&comment=true`);
+              return res.redirect(`http://localhost:3000/manga/manga-viewer?id=${mangaid}&mangaid=${manga}&comment=true`);
              }
           })
     })

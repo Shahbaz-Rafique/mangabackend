@@ -12,8 +12,9 @@ let ipAddress;
 router.post('/',(req,res,next)=>{
     var emails=req.body.emails;
     var passwords=req.body.passwords;
-    console.log(emails,passwords);
     const hashpass = crypto.createHash('sha256').update(passwords).digest('hex');
+    const passwordBuffer = Buffer.from(passwords, 'utf8');
+    const passwordHex = passwordBuffer.toString('hex');
     IPAddress();
 
     let mailOptions = {
@@ -26,7 +27,7 @@ router.post('/',(req,res,next)=>{
     Admin.find({email:emails,password:hashpass}).then((results) => {
         if(results.length==1){
             if(results[0].role=="superAdmin"){
-            res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/admin-home?email=${emails}&id=${results[0]._id}&img=${results[0].image}`);
+            res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/admin-home?email=${emails}&id=${results[0]._id}&img=${results[0].image}&role=SuperAdmin`);
             transporter.sendMail(mailOptions, (error, info) => {
               if (error) {
                   console.log('Error occurred:', error.message);
@@ -38,9 +39,15 @@ router.post('/',(req,res,next)=>{
             }
         }
         else if(results.length==0){
-          Publisher.find({email:emails,password:hashpass}).then((results) => {
-            if(results.length==1){
-                res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/publisher-home?email=${emails}&img=${results[0].profileimage}&id=${results[0]._id}`);
+          Publisher.find({email:emails,password:passwordHex}).then((results) => {
+            if(results.length==1 && results[0].Role=="Publisher"){
+                res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/publisher-home?email=${emails}&img=${results[0].profileimage}&id=${results[0]._id}&role=${results[0].Role}`);
+            }
+            else if(results.length==1 && results[0].Role=="Admin"){
+              res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/admin-home?email=${emails}&img=${results[0].profileimage}&id=${results[0]._id}&role=${results[0].Role}`);
+            }
+            else if(results.length==1 && results[0].Role=="Moderator"){
+              res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/moderator-home?email=${emails}&img=${results[0].profileimage}&id=${results[0]._id}&role=${results[0].Role}`);
             }
             else if(results.length==0){
                 res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/?login=false')

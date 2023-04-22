@@ -21,6 +21,10 @@ const User=mongoose.model('users',{
         type:String,
         required:true,
     },
+    status:{
+        type:String,
+        required:true,
+    },
     verificationcode:{
         type:String,
         required:true,
@@ -161,6 +165,10 @@ const Publisher=mongoose.model('publishers',{
         type:String,
         required:true,
     },
+    Role:{
+        type:String,
+        required:true,
+    },
     status:{
         type:String, 
     }
@@ -191,6 +199,14 @@ const Chapter=mongoose.model('chapters',{
         type:String,
         required:true,
     },
+    acceptcount:{
+        type:String,
+        required:true,
+    },
+    rejectcount:{
+        type:String,
+        required:true,
+    }
     
 })
 
@@ -200,6 +216,35 @@ const Favourite=mongoose.model('favourites',{
         required:true,
     },
     manga:{
+        type:Object,
+        required:true,
+    },
+    
+})
+
+const Chapterapproval=mongoose.model('chapterapprovals',{
+    adminid:{
+        type:String,
+        required:true,
+    },
+    chapterid:{
+        type:String,
+        required:true,
+    },
+    
+})
+
+
+const Carousel=mongoose.model('carousels',{
+    Image1:{
+        type:String,
+        required:true,
+    },
+    Image2:{
+        type:Object,
+        required:true,
+    },
+    Image3:{
         type:Object,
         required:true,
     },
@@ -229,4 +274,4 @@ const Comment=mongoose.model('comments',{
     }  
 })
 
-module.exports={User,Admin,Publisher,Mangas,Chapter,Favourite,Comment}
+module.exports={User,Admin,Publisher,Mangas,Chapter,Favourite,Comment,Carousel,Chapterapproval}

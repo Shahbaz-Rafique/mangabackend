@@ -33,7 +33,7 @@ router.post('/',(req,res,next)=>{
     console.log(firstname);
     User.findOne({emails:email}).then((result) => {
       if(result){
-        return res.redirect('http://toonvortes.com.s3-website-us-east-1.amazonaws.com/register?email=already');
+        return res.redirect('http://localhost:3000/register?email=already');
       }
       else{
     var data = {
@@ -42,6 +42,7 @@ router.post('/',(req,res,next)=>{
       "emails": email,
       "password":hashpass,
       "emailverify":"notverified",
+      "status":"active",
       "verificationcode":code,
     };
     db.collection('users').insertOne(data, (err, collection) => {
@@ -51,13 +52,13 @@ router.post('/',(req,res,next)=>{
       else{
         transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
-              return res.redirect('http://toonvortes.com.s3-website-us-east-1.amazonaws.com/register?email=false');
+              return res.redirect('http://localhost:3000/register?email=false');
           }
           else{
           console.log('Message sent successfully!');
           transporter.close();
           console.log('inserted');
-          return res.redirect(`http://toonvortes.com.s3-website-us-east-1.amazonaws.com/register/email-verification?email=${email}`);
+          return res.redirect(`http://localhost:3000/register/email-verification?email=${email}`);
           }
       });
       }
