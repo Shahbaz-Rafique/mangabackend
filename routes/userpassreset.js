@@ -25,13 +25,13 @@ router.post('/',(req,res,next)=>{
                 }
                 else{
                 console.log('Message sent successfully!');
-                res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/forgot-password/verification?email=${email}&id=${hashpass}`);
+                res.redirect(`http://usertoonvortex.com.s3-website-us-east-1.amazonaws.com/forgot-password/verification?email=${email}&id=${hashpass}`);
                 transporter.close();
                 }
             });
         }
         else{
-            res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/forgot-password?email=false');
+            res.redirect('http://usertoonvortex.com.s3-website-us-east-1.amazonaws.com/forgot-password?email=false');
         }
     })
 })

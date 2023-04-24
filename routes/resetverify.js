@@ -30,7 +30,7 @@ router.post('/',(req,res,next)=>{
                                 }
                                 else{
                                 console.log('Message sent successfully!');
-                                res.redirect(`http://localhost:3000/login?passreset=true`);
+                                res.redirect(`http://usertoonvortex.com.s3-website-us-east-1.amazonaws.com/login?passreset=true`);
                                 transporter.close();
                                 }
                             });
@@ -40,7 +40,7 @@ router.post('/',(req,res,next)=>{
                         });
             }
             else{
-                res.redirect(`http://localhost:3000/forgot-password/verification?email=${email}&id=${hashpass}&verify=false`);
+                res.redirect(`http://usertoonvortex.com.s3-website-us-east-1.amazonaws.com/forgot-password/verification?email=${email}&id=${hashpass}&verify=false`);
             }
         }
     })
