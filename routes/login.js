@@ -13,7 +13,6 @@ router.post('/',(req,res,next)=>{
     User.find({emails:email,password:hashpass,emailverify:"verified"}).then((results) => {
         if(results.length==1){
             if(results[0].status=="active"){
-                console.log("active");
                 res.redirect(`http://toonvortex.com/?email=${email}&login=true`);
             }
             else if(results[0].emailverifiy=="unverified"){
@@ -32,8 +31,7 @@ router.post('/',(req,res,next)=>{
                 }
                 else if(result.length==0){
                     Admin.find({email:email,password:hashpass}).then((result)=>{
-                        console.log(result);
-                        if(result){
+                        if(result.length==1){
                             res.redirect(`http://toonvortex.com/?email=${email}&login=true`);
                         }
                         else{
