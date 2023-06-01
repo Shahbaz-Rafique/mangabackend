@@ -14,7 +14,7 @@ router.post('/',(req,res,next)=>{
                 from: 'Manga Support',
                 to: email,
                 subject: 'Verify your email to Reset your Password',
-                html: `<p>Verify your email to reset your account password.</p><br/><center><a href="http://localhost:3000/?email=${email}&reset=start"><button style="color:#FFA153;background-color:#0F0D3D;font-weight:bold;width:170px;height:34px">Verify Your Email</button></a></center>`
+                html: `<p>Verify your email to reset your account password.</p><br/><center><a href="http://toonvortex.com/?email=${email}&reset=start"><button style="color:#FFA153;background-color:#0F0D3D;font-weight:bold;width:170px;height:34px">Verify Your Email</button></a></center>`
             };
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {

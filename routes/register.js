@@ -27,7 +27,7 @@ router.post('/',(req,res,next)=>{
       from: 'Manga Support',
       to: email,
       subject: 'Verify your Email for Manga World',
-      html: `<p>Hy ${firstname}!</p><p>We warmly welcome you in the Mangas world. Kindly verify your email to continue your journey in the Mangas world.</p><br/><center><a href="http://localhost:4000/verification?email=${email}"><button style="color:#FFA153;background-color:#0F0D3D;font-weight:bold;width:170px;height:34px">Verify Your Email</button></a></center>`
+      html: `<p>Hy ${firstname}!</p><p>We warmly welcome you in the Mangas world. Kindly verify your email to continue your journey in the Mangas world.</p><br/><center><a href="http://toonvortex.com/verification?email=${email}"><button style="color:#FFA153;background-color:#0F0D3D;font-weight:bold;width:170px;height:34px">Verify Your Email</button></a></center>`
     };
     const hashpass = crypto.createHash('sha256').update(password).digest('hex');
     console.log(firstname);
