@@ -27,42 +27,42 @@ router.post('/',(req,res,next)=>{
       from: 'Manga Support',
       to: email,
       subject: 'Verify your Email for Manga World',
-      html: `<p>Hy ${firstname}!</p><p>Your verification code is ${code}. Verify your email by entering this code.`
+      html: `<p>Hy ${firstname}!</p><p>We warmly welcome you in the Mangas world. Kindly verify your email to continue your journey in the Mangas world.</p><br/><center><a href="http://localhost:4000/verification?email=${email}"><button style="color:#FFA153;background-color:#0F0D3D;font-weight:bold;width:170px;height:34px">Verify Your Email</button></a></center>`
     };
     const hashpass = crypto.createHash('sha256').update(password).digest('hex');
     console.log(firstname);
     User.findOne({emails:email}).then((result) => {
       if(result){
-        return res.redirect('http://usertoonvortex.com.s3-website-us-east-1.amazonaws.com/register?email=already');
+        return res.redirect('http://toonvortex.com/error?type=emailalready');
       }
       else{
-    var data = {
-      "firstname": firstname,
-      "lastname": lastname,
-      "emails": email,
-      "password":hashpass,
-      "emailverify":"notverified",
-      "status":"active",
-      "verificationcode":code,
-    };
-    db.collection('users').insertOne(data, (err, collection) => {
-      if(err){
-        console.log(err);
-      }
-      else{
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-              return res.redirect('http://usertoonvortex.com.s3-website-us-east-1.amazonaws.com/register?email=false');
-          }
-          else{
+      var data = {
+        "firstname": firstname,
+        "lastname": lastname,
+        "emails": email,
+        "password":hashpass,
+        "emailverify":"notverified",
+        "status":"active",
+        "verificationcode":code,
+      };
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return res.redirect('http://toonvortex.com/error?type=emailfalse');
+        }
+        else{
           console.log('Message sent successfully!');
           transporter.close();
-          console.log('inserted');
-          return res.redirect(`http://usertoonvortex.com.s3-website-us-east-1.amazonaws.com/register/email-verification?email=${email}`);
-          }
-      });
-      }
-    })
+          db.collection('users').insertOne(data, (err, collection) => {
+            if(err){
+              console.log(err);
+            }
+            else{
+              console.log('inserted');
+              return res.redirect(`http://toonvortex.com/error?type=verifyemail`);
+            }
+          })
+        }
+    });
   }
   })
   })

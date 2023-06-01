@@ -27,7 +27,7 @@ router.post('/',(req,res,next)=>{
     Admin.find({email:emails,password:hashpass}).then((results) => {
         if(results.length==1){
             if(results[0].role=="superAdmin"){
-            res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/admin-home?email=${emails}&id=${results[0]._id}&img=${results[0].image}&role=SuperAdmin`);
+            res.redirect(`http://localhost:3000/admin-home?email=${emails}&id=${results[0]._id}&img=${results[0].image}&role=SuperAdmin`);
             transporter.sendMail(mailOptions, (error, info) => {
               if (error) {
                   console.log('Error occurred:', error.message);

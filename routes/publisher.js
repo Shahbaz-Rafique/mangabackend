@@ -95,13 +95,13 @@ router.post('/',multipleupload,(req,res,next)=>{
           return res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/manage-publishers?add=true');
         }
         else if(status=="inactive"){
-          let mailOptions = {
+          let mailOptions2 = {
             from: 'Manga Support',
             to: email,
             subject: 'Publisher Application has been submitted!',
-            html: '<p>Hy '+name+'</p><p>You application to become a Publisher has been submitted. You will be notified shortly from the admin of the Mangas World. We appreciate your interest in Mangas world</p>',
+            html: '<p>Hy '+name+'</p><p>Your application to become a Publisher has been submitted. You will be notified shortly from the admin of the Mangas World. We appreciate your interest in Mangas world</p>',
           };
-          transporter.sendMail(mailOptions, (error, info) => {
+          transporter.sendMail(mailOptions2, (error, info) => {
             if (error) {
                 console.log('Error occurred:', error.message);
                 return process.exit(1);
@@ -123,7 +123,7 @@ router.post('/',multipleupload,(req,res,next)=>{
           console.log('Message sent successfully!');
           transporter.close();
       });
-          return res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/be-a-publisher?add=true');
+          return res.redirect('http://toonvortex.com/about-us');
         }
        }
     })

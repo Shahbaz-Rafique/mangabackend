@@ -5,8 +5,7 @@ var { db } = require('../mongodb/db.js');
 var { transporter } = require('../nodemailer/mailer');
 var { User } = require('../models/schemas');
 
-router.post('/', (req, res, next) => {
-    var password = req.body.password;
+router.get('/', (req, res, next) => {
     var email = req.query.email;
     let mailOptions = {
         from: 'Manga Support',
@@ -14,7 +13,7 @@ router.post('/', (req, res, next) => {
         subject: 'Congratulations! You account has been registered on Mangas World',
         html: `<p>Thank you for choosing to register with our platform! We are thrilled to have you join our community. Enjoy the best mangas reading on our platform. Thank you again for joining us, and we look forward to seeing you on our platform!</p><p>Best regards,</p><p>Manga World Team</p>`
     };
-    User.findOne({ emails: email,verificationcode:password }).then((result) => {
+    User.findOne({ emails: email}).then((result) => {
         if (result) {
             User.updateOne({emails:email},{"emailverify":"verified"}).exec()
             .then((doc)=>{
@@ -25,14 +24,14 @@ router.post('/', (req, res, next) => {
                     console.log('Message sent successfully!');
                     transporter.close();
                 });
-                res.redirect(`http://usertoonvortex.com.s3-website-us-east-1.amazonaws.com/login-home?email=${email}`);
+                res.redirect(`http://toonvortex.com/error?type=verified`);
                 })
                 .catch((err) => {
                     console.error(err);
                 });
         }
         else {
-            res.redirect(`http://usertoonvortex.com.s3-website-us-east-1.amazonaws.com/register/email-verification?verify=false&email=${email}`);
+            res.redirect(`http://toonvortex.com/error?type=unverified`);
         }
     })
 })

@@ -25,7 +25,7 @@ router.post('/',(req,res,next)=>{
             }
             else{
                 console.log("inserted");
-              return res.redirect(`http://usertoonvortex.com.s3-website-us-east-1.amazonaws.com/manga/manga-viewer?id=${mangaid}&mangaid=${manga}&comment=true`);
+              return res.redirect(`http://toonvortex.com/manga/manga-viewer?id=${mangaid}&mangaid=${manga}&comment=true`);
              }
           })
     })
