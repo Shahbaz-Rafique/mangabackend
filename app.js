@@ -50,6 +50,7 @@ var freezeRouter= require('./routes/freeze');
 var deleteuserRouter= require('./routes/deleteuser'); 
 var getcommentRouter= require('./routes/getcomment'); 
 var deletecommentRouter= require('./routes/deletecomment'); 
+var removefavouriteRouter= require('./routes/removefavourite'); 
 
 var app = express();
 var cors=require('cors');
@@ -126,6 +127,7 @@ app.use('/freeze', freezeRouter);
 app.use('/deleteuser', deleteuserRouter);
 app.use('/getcomment', getcommentRouter);
 app.use('/deletecomment', deletecommentRouter);
+app.use('/removefavourite', removefavouriteRouter);
 
 // error handler
 app.listen(8080);
