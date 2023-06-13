@@ -4,8 +4,36 @@ var crypto = require('crypto');
 var {Admin}=require('../models/schemas');
 var {Publisher}=require('../models/schemas');
 var {transporter}=require('../nodemailer/mailer');
+var {API}=require('../models/schemas');
 
 router.post('/',(req,res,next)=>{
+    const currentDates = new Date().toISOString().split('T')[0]
+  API.findOne({})
+  .exec()
+  .then((api) => {
+    if (api && api.dated == currentDates) {
+      API.updateOne({}, { $inc: { last: 1, total: 1 } })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      API.updateOne({}, { last: 0, $inc: { total: 1 }, dated: currentDates })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+  });
     var code=req.body.code;
     var verify=req.query.code;
     var email=req.query.email;
@@ -31,7 +59,7 @@ router.post('/',(req,res,next)=>{
                                 }
                                 else{
                                 console.log('Message sent successfully!');
-                                res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com?passreset=true`);
+                                res.redirect(`http://admin.toonvortex.com?passreset=true`);
                                 transporter.close();
                                 }
                             });
@@ -62,7 +90,7 @@ router.post('/',(req,res,next)=>{
                                         }
                                         else{
                                         console.log('Message sent successfully!');
-                                        return res.redirect(`http://localhost:3000?passreset=true`);
+                                        return res.redirect(`http://admin.toonvortex.com?passreset=true`);
                                         }
                                     });
                                     })
@@ -71,7 +99,7 @@ router.post('/',(req,res,next)=>{
                                 });
                     }
                     else{
-                        res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/forgot-password/verification?email=${email}&id=${hashpass}&verify=false`);
+                        res.redirect(`http://admin.toonvortex.com/forgot-password/verification?email=${email}&id=${hashpass}&verify=false`);
                     }
                 }
             })

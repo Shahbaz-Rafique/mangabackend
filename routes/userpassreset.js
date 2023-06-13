@@ -5,8 +5,36 @@ var {User}=require('../models/schemas');
 var {Admin} = require('../models/schemas');
 var {Publisher} = require('../models/schemas');
 var {transporter}=require('../nodemailer/mailer');
+var {API}=require('../models/schemas');
 
 router.post('/',(req,res,next)=>{
+    const currentDates = new Date().toISOString().split('T')[0]
+  API.findOne({})
+  .exec()
+  .then((api) => {
+    if (api && api.dated == currentDates) {
+      API.updateOne({}, { $inc: { last: 1, total: 1 } })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      API.updateOne({}, { last: 0, $inc: { total: 1 }, dated: currentDates })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+  });
     var email=req.body.emails;
     User.findOne({emails:email}).then((result)=>{
         if(result){

@@ -4,6 +4,7 @@ var crypto = require('crypto');
 var {db} = require('../mongodb/db.js');
 var {transporter}=require('../nodemailer/mailer');
 var { User } = require('../models/schemas');
+var {API}=require('../models/schemas');
 
 
 function generateRandomPassword() {
@@ -18,11 +19,39 @@ function generateRandomPassword() {
 }
 
 router.post('/',(req,res,next)=>{
+  const currentDates = new Date().toISOString().split('T')[0]
+  API.findOne({})
+  .exec()
+  .then((api) => {
+    if (api && api.dated == currentDates) {
+      API.updateOne({}, { $inc: { last: 1, total: 1 } })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      API.updateOne({}, { last: 0, $inc: { total: 1 }, dated: currentDates })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+  });
     var firstname=req.body.firstname;
     var lastname=req.body.lastname;
     var email=req.body.email;
     var password=req.body.password;
     var code=generateRandomPassword();
+    const currentDate = new Date().toISOString().split('T')[0]
     let mailOptions = {
       from: 'Manga Support',
       to: email,
@@ -44,6 +73,7 @@ router.post('/',(req,res,next)=>{
         "emailverify":"notverified",
         "status":"active",
         "verificationcode":code,
+        "registerDate":currentDate,
       };
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {

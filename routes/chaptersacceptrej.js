@@ -4,8 +4,36 @@ var crypto = require('crypto');
 var {db} = require('../mongodb/db.js');
 var {Chapter}=require('../models/schemas');
 var {Chapterapproval}=require('../models/schemas');
+var {API}=require('../models/schemas');
 
 router.get('/',(req,res,next)=>{
+    const currentDates = new Date().toISOString().split('T')[0]
+  API.findOne({})
+  .exec()
+  .then((api) => {
+    if (api && api.dated == currentDates) {
+      API.updateOne({}, { $inc: { last: 1, total: 1 } })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      API.updateOne({}, { last: 0, $inc: { total: 1 }, dated: currentDates })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+  });
     var ID=req.query.id;
     var Status=req.query.status;
     var adminid=req.query.adminid;
@@ -13,7 +41,7 @@ router.get('/',(req,res,next)=>{
     Chapterapproval.findOne({adminid:adminid,chapterid:ID}).then((result)=>{
         console.log(result);
         if(result!=null){
-            res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/manga-approval?approval=already`);
+            res.redirect(`http://admin.toonvortex.com/manga-approval?approval=already`);
         }
         else{
             Chapter.findOne({_id:ID}).then((result)=>{
@@ -33,7 +61,7 @@ router.get('/',(req,res,next)=>{
                             }
                             else{
                                 console.log("inserted");
-                                res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/manga-approval?approval=${Status}`);
+                                res.redirect(`http://admin.toonvortex.com/manga-approval?approval=${Status}`);
                              }
                           })
                         })
@@ -56,7 +84,7 @@ router.get('/',(req,res,next)=>{
                             }
                             else{
                                 console.log("inserted");
-                                res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/manga-approval?approval=${Status}`);
+                                res.redirect(`http://admin.toonvortex.com/manga-approval?approval=${Status}`);
                              }
                           })
                         })
@@ -80,7 +108,7 @@ router.get('/',(req,res,next)=>{
                             }
                             else{
                                 console.log("inserted");
-                                res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/manga-approval?approval=${Status}`);
+                                res.redirect(`http://admin.toonvortex.com/manga-approval?approval=${Status}`);
                              }
                           })
                         })
@@ -103,7 +131,7 @@ router.get('/',(req,res,next)=>{
                                 }
                                 else{
                                     console.log("inserted");
-                                    res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/manga-approval?approval=${Status}`);
+                                    res.redirect(`http://admin.toonvortex.com/manga-approval?approval=${Status}`);
                                  }
                               })
                             })

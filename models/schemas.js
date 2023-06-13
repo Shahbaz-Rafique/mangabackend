@@ -29,6 +29,10 @@ const User=mongoose.model('users',{
         type:String,
         required:true,
     },
+    registerDate:{
+        type:String,
+        required:true,
+    },
 })
 
 const Admin=mongoose.model('admins',{
@@ -105,6 +109,25 @@ const Mangas=mongoose.model('mangas',{
     },
     addDate:{
         type:Date,
+        required:true,
+    },
+})
+
+const Members=mongoose.model('members',{
+    name:{
+        type:String,
+        required:true,
+    },
+    email:{
+        type:String,
+        required:true,
+    },
+    image:{
+        type:String,
+        required:true,
+    },
+    comment:{
+        type:String,
         required:true,
     },
 })
@@ -274,4 +297,19 @@ const Comment=mongoose.model('comments',{
     }  
 })
 
-module.exports={User,Admin,Publisher,Mangas,Chapter,Favourite,Comment,Carousel,Chapterapproval}
+const API = mongoose.model('api', {
+    last: {
+        type: Number,
+        required: true,
+    },
+    total: {
+        type: Number,
+        required: true,
+    },
+    dated: {
+        type: String,
+        required: true,
+    },
+});
+
+module.exports={User,Admin,Publisher,Mangas,Chapter,Favourite,Comment,Carousel,Chapterapproval,Members,API}

@@ -4,6 +4,7 @@ var crypto = require('crypto');
 var {db} = require('../mongodb/db.js');
 const multer = require("multer");
 var {Publisher}=require('../models/schemas');
+var {API}=require('../models/schemas');
 var {transporter}=require('../nodemailer/mailer');
 
 var storage=multer.diskStorage({
@@ -30,6 +31,33 @@ function generateRandomPassword() {
   }
 
 router.post('/',multipleupload,(req,res,next)=>{
+  const currentDates = new Date().toISOString().split('T')[0]
+  API.findOne({})
+  .exec()
+  .then((api) => {
+    if (api && api.dated == currentDates) {
+      API.updateOne({}, { $inc: { last: 1, total: 1 } })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      API.updateOne({}, { last: 0, $inc: { total: 1 }, dated: currentDates })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+  });
     var status=req.query.status;
     var name=req.body.name;
     var email=req.body.email;
@@ -92,7 +120,7 @@ router.post('/',multipleupload,(req,res,next)=>{
             console.log('Message sent successfully!');
             transporter.close();
         });
-          return res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/manage-publishers?add=true');
+          return res.redirect('http://admin.toonvortex.com/manage-publishers?add=true');
         }
         else if(status=="inactive"){
           let mailOptions2 = {

@@ -4,6 +4,7 @@ var crypto = require('crypto');
 var {db} = require('../mongodb/db.js');
 const multer = require("multer");
 var {transporter}=require('../nodemailer/mailer');
+var {API}=require('../models/schemas');
 
 var storage=multer.diskStorage({
   destination:function(req,file,cb){
@@ -18,6 +19,34 @@ var upload = multer({ storage });
 var multipleupload = upload.fields([{ name: "chapterimage" }, { name: "chapterfile" }]);
 
 router.post('/',multipleupload,(req,res,next)=>{
+  const currentDates = new Date().toISOString().split('T')[0]
+  API.findOne({})
+  .exec()
+  .then((api) => {
+    if (api && api.dated == currentDates) {
+      API.updateOne({}, { $inc: { last: 1, total: 1 } })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      API.updateOne({}, { last: 0, $inc: { total: 1 }, dated: currentDates })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
     var id=req.query.id;
     var manga=req.body.name;
     var name=req.body.chaptername;

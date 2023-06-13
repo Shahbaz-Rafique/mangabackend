@@ -1,9 +1,37 @@
 var express = require('express');
 var router = express.Router();
 var {db} = require('../mongodb/db.js');
+var {API}=require('../models/schemas');
 var {Comment}=require('../models/schemas');
 
 router.get('/',(req,res,next)=>{
+    const currentDates = new Date().toISOString().split('T')[0]
+  API.findOne({})
+  .exec()
+  .then((api) => {
+    if (api && api.dated == currentDates) {
+      API.updateOne({}, { $inc: { last: 1, total: 1 } })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      API.updateOne({}, { last: 0, $inc: { total: 1 }, dated: currentDates })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+  });
     var id=req.query.id;
     Comment.find({mangaid:id}).then((results) => {
         res.send(results);

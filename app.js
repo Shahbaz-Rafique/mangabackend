@@ -51,6 +51,10 @@ var deleteuserRouter= require('./routes/deleteuser');
 var getcommentRouter= require('./routes/getcomment'); 
 var deletecommentRouter= require('./routes/deletecomment'); 
 var removefavouriteRouter= require('./routes/removefavourite'); 
+var addmemberRouter= require('./routes/addmemberemail'); 
+var getmemberRouter= require('./routes/getmember'); 
+var deletememberRouter= require('./routes/deletemember'); 
+var getapicountRouter= require('./routes/getapicount'); 
 
 var app = express();
 var cors=require('cors');
@@ -128,6 +132,10 @@ app.use('/deleteuser', deleteuserRouter);
 app.use('/getcomment', getcommentRouter);
 app.use('/deletecomment', deletecommentRouter);
 app.use('/removefavourite', removefavouriteRouter);
+app.use('/addmember', addmemberRouter);
+app.use('/getmembers', getmemberRouter);
+app.use('/deletemember', deletememberRouter);
+app.use('/getapicount', getapicountRouter);
 
 // error handler
 app.listen(8080);

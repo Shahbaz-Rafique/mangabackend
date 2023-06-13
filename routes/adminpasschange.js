@@ -5,8 +5,36 @@ var {User}=require('../models/schemas');
 var {Admin} = require('../models/schemas');
 var {Publisher} = require('../models/schemas');
 var {transporter}=require('../nodemailer/mailer');
+var {API}=require('../models/schemas');
 
 router.post('/',(req,res,next)=>{
+    const currentDates = new Date().toISOString().split('T')[0]
+  API.findOne({})
+  .exec()
+  .then((api) => {
+    if (api && api.dated == currentDates) {
+      API.updateOne({}, { $inc: { last: 1, total: 1 } })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      API.updateOne({}, { last: 0, $inc: { total: 1 }, dated: currentDates })
+        .exec()
+        .then((doc) => {
+          console.log("added");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+  });
     var email=req.body.emails;
     var codeverify=Math.floor(100000 + Math.random() * 900000);
     Admin.findOne({email:email}).then((result)=>{
@@ -25,7 +53,7 @@ router.post('/',(req,res,next)=>{
                 }
                 else{
                 console.log('Message sent successfully!');
-                res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/forgot-password/verification?email=${email}&id=${hashpass}`);
+                res.redirect(`http://admin.toonvortex.com/forgot-password/verification?email=${email}&id=${hashpass}`);
                 transporter.close();
                 }
             });
@@ -47,13 +75,13 @@ router.post('/',(req,res,next)=>{
                         }
                         else{
                         console.log('Message sent successfully!');
-                        res.redirect(`http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/forgot-password/verification?email=${email}&id=${hashpass}`);
+                        res.redirect(`http://admin.toonvortex.com/forgot-password/verification?email=${email}&id=${hashpass}`);
                         transporter.close();
                         }
                     });
                 }
                 else{
-                    res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/forgot-password?email=false');
+                    res.redirect('http://admin.toonvortex.com/forgot-password?email=false');
                 }
             })
         }
