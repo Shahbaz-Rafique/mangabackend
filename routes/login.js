@@ -7,7 +7,7 @@ var {Admin}=require('../models/schemas');
 var {API}=require('../models/schemas');
 
 router.post('/',(req,res,next)=>{
-    const currentDates = new Date().toISOString().split('T')[0]
+  const currentDates = new Date().toISOString().split('T')[0]
   API.findOne({})
   .exec()
   .then((api) => {
@@ -36,12 +36,13 @@ router.post('/',(req,res,next)=>{
   });
     var email=req.body.emails;
     var password=req.body.passwords;
+    var token=req.query.token;
 
     const hashpass = crypto.createHash('sha256').update(password).digest('hex');
     User.find({emails:email,password:hashpass,emailverify:"verified"}).then((results) => {
         if(results.length==1){
             if(results[0].status=="active"){
-                res.redirect(`http://toonvortex.com/?email=${email}&login=true`);
+                res.redirect(`http://toonvortex.com/?email=${email}&login=true&auth=${token}`);
             }
             else if(results[0].emailverifiy=="unverified"){
                 res.redirect(`http://toonvortex.com/error?type=unverified`);
@@ -54,13 +55,13 @@ router.post('/',(req,res,next)=>{
             Publisher.find({email:email,password:hashpass}).then((result)=>{
                 if(result.length==1){
                     if(result[0].status=="active"){
-                        res.redirect(`http://toonvortex.com/?email=${email}&login=true`);
+                        res.redirect(`http://toonvortex.com/?email=${email}&login=true&auth=${token}`);
                     }
                 }
                 else if(result.length==0){
                     Admin.find({email:email,password:hashpass}).then((result)=>{
                         if(result.length==1){
-                            res.redirect(`http://toonvortex.com/?email=${email}&login=true`);
+                            res.redirect(`http://toonvortex.com/?email=${email}&login=true&auth=${token}`);
                         }
                         else{
                             res.redirect('http://toonvortex.com/error?type=wronglogin')
