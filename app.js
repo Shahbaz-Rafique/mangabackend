@@ -7,9 +7,9 @@ const https = require('https');
 const fs = require('fs');
 
 const options = {
-  key: fs.readFileSync('private.key'),
-  cert: fs.readFileSync('certificate.crt'),
-  ca: fs.readFileSync('ca.crt'),
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert'),
+  ca: fs.readFileSync('ca.cert'),
 };
 
 var indexRouter = require('./routes/index');
