@@ -3,14 +3,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser=require("body-parser");
-const https = require('https');
-const fs = require('fs');
-
-const options = {
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert'),
-  ca: fs.readFileSync('ca.cert'),
-};
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -145,11 +137,8 @@ app.use('/getmembers', getmemberRouter);
 app.use('/deletemember', deletememberRouter);
 app.use('/getapicount', getapicountRouter);
 
-const server = https.createServer(options, app);
-const port = process.env.PORT || 443;
 // error handler
-server.listen(port, () => {
-  console.log(`API server running on port ${port}`);
-});
+app.listen(8080);
+console.log('Listening on 8080')
 
 module.exports = app;
