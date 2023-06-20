@@ -3,6 +3,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser=require("body-parser");
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -137,8 +140,15 @@ app.use('/getmembers', getmemberRouter);
 app.use('/deletemember', deletememberRouter);
 app.use('/getapicount', getapicountRouter);
 
+var options = {
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.crt')
+};
+
 // error handler
-app.listen(8080);
+http.createServer(app).listen(80);
+// Create an HTTPS service identical to the HTTP service.
+https.createServer(options, app).listen(443);
 console.log('Listening on 8080')
 
 module.exports = app;
