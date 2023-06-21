@@ -140,15 +140,13 @@ app.use('/getmembers', getmemberRouter);
 app.use('/deletemember', deletememberRouter);
 app.use('/getapicount', getapicountRouter);
 
-var options = {
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.crt')
-};
+const sslServer=https.createServer({
+  key: fs.readFileSync(path.join(__dirname,'cert','private.pem')),
+  cert: fs.readFileSync(path.join(__dirname,'cert','certificate.pem'))
+},app);
 
-// error handler
-http.createServer(app).listen(80);
-// Create an HTTPS service identical to the HTTP service.
-https.createServer(options, app).listen(443);
-console.log('Listening on 8080')
+sslServer.listen(3443,()=>{
+  console.log('Listening on 3443 secure')
+})
 
 module.exports = app;
