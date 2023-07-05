@@ -44,22 +44,16 @@ router.post('/',(req,res,next)=>{
     const passwordBuffer = Buffer.from(passwords, 'utf8');
     const passwordHex = passwordBuffer.toString('hex');
 
-    Admin.find({email:emails,password:hashpass}).then((results) => {
-        if(results.length==0){
-          Publisher.find({email:emails,password:passwordHex}).then((results) => {
-            if(results.length==1 && results[0].Role=="Moderator"){
-              res.redirect(`http://staff.toonvortex.com/moderator-home?email=${emails}&img=${results[0].profileimage}&id=${results[0]._id}&role=${results[0].Role}`);
-            }
-            else if(results.length==0){
-                res.redirect('http://staff.toonvortex.com/?login=false')
-            }
-          }).catch((err) => {
-            console.log(err);
-          });
-        }
-      }).catch((err) => {
-        console.log(err);
-      });
+    Publisher.find({email:emails,password:passwordHex,Role:"Moderator"}).then((results) => {
+      if(results.length==1){
+        res.redirect(`http://staff.toonvortex.com/moderator-home?email=${emails}&img=${results[0].profileimage}&id=${results[0]._id}&role=${results[0].Role}`);
+      }
+      else if(results.length==0){
+          res.redirect('http://staff.toonvortex.com/?login=false')
+      }
+    }).catch((err) => {
+      console.log(err);
+    });
   })
 
   module.exports = router;
