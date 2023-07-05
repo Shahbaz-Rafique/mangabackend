@@ -36,6 +36,8 @@ router.post('/',(req,res,next)=>{
     var manga=req.query.manga;
     var email=req.query.email;
     var comment=req.body.comment;
+    var name=req.query.name;
+    var image=req.query.image;
     const currentDate = new Date();
     console.log(email);
     User.findOne({emails:email}).then((result)=>{
@@ -43,7 +45,8 @@ router.post('/',(req,res,next)=>{
         var data = {
             "mangaid":mangaid,
             "email": email,
-            "name":result.firstname+' '+result.lastname,
+            "name":name,
+            "image":image,
             "comment":comment,
             "date":currentDate,
           };

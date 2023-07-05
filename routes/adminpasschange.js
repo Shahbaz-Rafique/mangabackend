@@ -8,7 +8,8 @@ var {transporter}=require('../nodemailer/mailer');
 var {API}=require('../models/schemas');
 
 router.post('/',(req,res,next)=>{
-    const currentDates = new Date().toISOString().split('T')[0]
+  var role=req.query.role;
+  const currentDates = new Date().toISOString().split('T')[0]
   API.findOne({})
   .exec()
   .then((api) => {
@@ -75,13 +76,27 @@ router.post('/',(req,res,next)=>{
                         }
                         else{
                         console.log('Message sent successfully!');
-                        res.redirect(`http://admin.toonvortex.com/forgot-password/verification?email=${email}&id=${hashpass}`);
-                        transporter.close();
+                        if(role=="publisher"){
+                          res.redirect(`http://publisher.toonvortex.com/forgot-password/verification?email=${email}&id=${hashpass}`);
+                          transporter.close();
+                        }
+                        else if(role=="staff"){
+                          res.redirect(`http://staff.toonvortex.com/forgot-password/verification?email=${email}&id=${hashpass}`);
+                          transporter.close();
+                        }
                         }
                     });
                 }
                 else{
+                  if(role=="publisher"){
+                    res.redirect('http://publisher.toonvortex.com/forgot-password?email=false');
+                  }
+                  else if(role=="staff"){
+                    res.redirect('http://staff.toonvortex.com/forgot-password?email=false');
+                  }
+                  else if(role=="admin"){
                     res.redirect('http://admin.toonvortex.com/forgot-password?email=false');
+                  }
                 }
             })
         }

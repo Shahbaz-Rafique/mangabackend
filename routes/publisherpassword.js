@@ -43,10 +43,10 @@ router.post('/',(req,res,next)=>{
             Publisher.updateOne({_id:id},{"password":passwordHexs}).exec()
             .then((doc)=>{
                 if(role=="moderator"){
-                    res.redirect('http://admin.toonvortex.com/moderator-password?changed=true');
+                    res.redirect('http://publisher.toonvortex.com/moderator-password?changed=true');
                 }
                 else{
-                    res.redirect('http://admin.toonvortex.com/publisher-credentials?changed=true');
+                    res.redirect('http://publisher.toonvortex.com/publisher-credentials?changed=true');
                 }
                 })
                 .catch((err) => {
@@ -55,10 +55,10 @@ router.post('/',(req,res,next)=>{
         }
         else{
             if(role=="moderator"){
-                res.redirect('http://admin.toonvortex.com/moderator-password?changed=false');
+                res.redirect('http://publisher.toonvortex.com/moderator-password?changed=false');
             }
             else{
-                res.redirect('http://admin.toonvortex.com/publisher-credentials?changed=false');
+                res.redirect('http://publisher.toonvortex.com/publisher-credentials?changed=false');
             }
         }
     })

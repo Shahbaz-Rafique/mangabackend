@@ -66,7 +66,7 @@ router.post('/',upload.single('manga'),(req,res,next)=>{
       }
       else{
         console.log('inserted');
-        return res.redirect('http://admin.toonvortex.com.s3-website-us-east-1.amazonaws.com/add-manga?add=true');
+        return res.redirect('http://publisher.toonvortex.com/add-manga?add=true');
        }
     })
   })

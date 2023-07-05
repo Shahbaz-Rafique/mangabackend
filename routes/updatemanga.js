@@ -64,7 +64,7 @@ router.post('/',upload.single("manga"),(req,res,next)=>{
             "mangaimage":fileName,
         }).exec()
                 .then((doc)=>{
-                    res.redirect('http://admin.toonvortex.com/manage-manga');
+                    res.redirect('http://publisher.toonvortex.com/manage-manga');
                     })
                 .catch((err) => {
                     console.error(err);
@@ -79,7 +79,7 @@ router.post('/',upload.single("manga"),(req,res,next)=>{
             "summary":summary,
         }).exec()
                 .then((doc)=>{
-                    res.redirect('http://admin.toonvortex.com/manage-manga');
+                    res.redirect('http://publisher.toonvortex.com/manage-manga');
                     })
                 .catch((err) => {
                     console.error(err);

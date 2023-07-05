@@ -58,6 +58,14 @@ var addmemberRouter= require('./routes/addmemberemail');
 var getmemberRouter= require('./routes/getmember'); 
 var deletememberRouter= require('./routes/deletemember'); 
 var getapicountRouter= require('./routes/getapicount'); 
+var publisherloginRouter= require('./routes/publisherlogin'); 
+var publisherresetRouter= require('./routes/publisherreset'); 
+var moderatorloginRouter= require('./routes/moderatorlogin'); 
+var moderatorresetRouter= require('./routes/moderatorreset'); 
+var userprofileRouter= require('./routes/userprofile'); 
+var updateuserprofileRouter= require('./routes/updateuserprofile'); 
+var updateuserbyadminRouter= require('./routes/updateuser'); 
+var deleteuserbyadminRouter= require('./routes/deleteuserbyadmin'); 
 
 var app = express();
 var cors=require('cors');
@@ -127,6 +135,7 @@ app.use('/passwordreset', passresetRouter);
 app.use('/resetverify', resetverifyRouter);
 app.use('/adminpasschange', adminpasschangeRouter);
 app.use('/adminreset', adminresetRouter);
+app.use('/publisherreset', publisherresetRouter);
 app.use('/addcarousel', addcarouselRouter);
 app.use('/getcarousel', getcarouselRouter);
 app.use('/getusers', getusersRouter);
@@ -139,14 +148,16 @@ app.use('/addmember', addmemberRouter);
 app.use('/getmembers', getmemberRouter);
 app.use('/deletemember', deletememberRouter);
 app.use('/getapicount', getapicountRouter);
+app.use('/publisherlogin', publisherloginRouter);
+app.use('/moderatorlogin', moderatorloginRouter);
+app.use('/moderatorreset', moderatorresetRouter);
+app.use('/userprofile', userprofileRouter);
+app.use('/updateuserprofile', updateuserprofileRouter);
+app.use('/updateuseradmin', updateuserbyadminRouter);
+app.use('/deleteuserbyadmin', deleteuserbyadminRouter);
 
-const sslServer=https.createServer({
-  key: fs.readFileSync(path.join(__dirname,'cert','private.pem')),
-  cert: fs.readFileSync(path.join(__dirname,'cert','certificate.pem'))
-},app);
-
-sslServer.listen(3443,()=>{
-  console.log('Listening on 3443 secure')
+app.listen(8080,()=>{
+  console.log('Listening on 8080')
 })
 
 module.exports = app;

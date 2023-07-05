@@ -50,13 +50,16 @@ router.post('/',(req,res,next)=>{
     var lastname=req.body.lastname;
     var email=req.body.email;
     var password=req.body.password;
+    var uniquename=firstname+' '+lastname;
+    var dateofbirth=req.body.dob;
     var code=generateRandomPassword();
     const currentDate = new Date().toISOString().split('T')[0]
+    const dob = new Date(dateofbirth).toISOString().split('T')[0]
     let mailOptions = {
       from: 'Manga Support',
       to: email,
       subject: 'Verify your Email for Manga World',
-      html: `<p>Hy ${firstname}!</p><p>We warmly welcome you in the Mangas world. Kindly verify your email to continue your journey in the Mangas world.</p><br/><center><a href="http://208.113.133.109:8080/verification?email=${email}"><button style="color:#FFA153;background-color:#0F0D3D;font-weight:bold;width:170px;height:34px">Verify Your Email</button></a></center>`
+      html: `<p>Hy ${firstname}!</p><p>We warmly welcome you in the Mangas world. Kindly verify your email to continue your journey in the Mangas world.</p><br/><center><a href="http://208.113.200.60:8080/verification?email=${email}"><button style="color:#FFA153;background-color:#0F0D3D;font-weight:bold;width:170px;height:34px">Verify Your Email</button></a></center>`
     };
     const hashpass = crypto.createHash('sha256').update(password).digest('hex');
     console.log(firstname);
@@ -68,8 +71,11 @@ router.post('/',(req,res,next)=>{
       var data = {
         "firstname": firstname,
         "lastname": lastname,
+        "uniquename":uniquename,
         "emails": email,
         "password":hashpass,
+        "image":"",
+        "dob":dob,
         "emailverify":"notverified",
         "status":"active",
         "verificationcode":code,

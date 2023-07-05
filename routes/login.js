@@ -42,7 +42,7 @@ router.post('/',(req,res,next)=>{
     User.find({emails:email,password:hashpass,emailverify:"verified"}).then((results) => {
         if(results.length==1){
             if(results[0].status=="active"){
-                res.redirect(`http://toonvortex.com/?email=${email}&login=true&auth=${token}`);
+                res.redirect(`http://toonvortex.com/?email=${email}&login=true&auth=${token}&image=${results[0].image}&uname=${results[0].uniquename}`);
             }
             else if(results[0].emailverifiy=="unverified"){
                 res.redirect(`http://toonvortex.com/error?type=unverified`);
@@ -55,13 +55,13 @@ router.post('/',(req,res,next)=>{
             Publisher.find({email:email,password:hashpass}).then((result)=>{
                 if(result.length==1){
                     if(result[0].status=="active"){
-                        res.redirect(`http://toonvortex.com/?email=${email}&login=true&auth=${token}`);
+                        res.redirect(`http://toonvortex.com/?email=${email}&login=true&auth=${token}&image=${result[0].profileimage}&uname=${result[0].name}`);
                     }
                 }
                 else if(result.length==0){
                     Admin.find({email:email,password:hashpass}).then((result)=>{
                         if(result.length==1){
-                            res.redirect(`http://toonvortex.com/?email=${email}&login=true&auth=${token}`);
+                            res.redirect(`http://toonvortex.com/?email=${email}&login=true&auth=${token}&image=${result[0].image}&uname=${result[0].name}`);
                         }
                         else{
                             res.redirect('http://toonvortex.com/error?type=wronglogin')

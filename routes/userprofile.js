@@ -5,7 +5,8 @@ var {User}=require('../models/schemas');
 var {API}=require('../models/schemas');
 
 router.get('/',(req,res,next)=>{
-    const currentDates = new Date().toISOString().split('T')[0]
+  var email=req.query.email;
+  const currentDates = new Date().toISOString().split('T')[0]
   API.findOne({})
   .exec()
   .then((api) => {
@@ -32,9 +33,8 @@ router.get('/',(req,res,next)=>{
   .catch((err) => {
     console.error(err);
   });
-    var id = req.query.id;
-    User.deleteOne({_id:id}).then((results) => {
-        res.redirect('http://staff.toonvortex.com/view-users');
+   User.find({emails:email}).then((results) => {
+        res.send(results);
       }).catch((err) => {
           console.log(err);
       });

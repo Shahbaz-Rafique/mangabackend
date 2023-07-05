@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var crypto = require('crypto');
-var {Admin}=require('../models/schemas');
 var {Publisher}=require('../models/schemas');
 var {transporter}=require('../nodemailer/mailer');
 var {API}=require('../models/schemas');
@@ -40,11 +39,12 @@ router.post('/',(req,res,next)=>{
     var password=req.body.password;
     const hashpass = crypto.createHash('sha256').update(code).digest('hex');
     const passwordBuffer = Buffer.from(password, 'utf8');
-    const changepassword = passwordBuffer.toString('hex');
-    Admin.findOne({email:email}).then((result)=>{
+    const changepassword = passwordBuffer.toString('hex');   
+    Publisher.findOne({email:email}).then((result)=>{
         if(result){
+            console.log(result);
             if(verify==hashpass){
-                Admin.updateOne({email:email},{
+                Publisher.updateOne({email:email},{
                     "password":changepassword,
                 }).exec()
                         .then((doc)=>{
@@ -52,7 +52,7 @@ router.post('/',(req,res,next)=>{
                                 from: 'Manga Support',
                                 to: email,
                                 subject: 'Your Password has been reset',
-                                html: `<p>Dear Admin! Your mangas account password has been reset. Now you can login with your new password.</p>`
+                                html: `<p>Dear Publisher! Your mangas account password has been reset. Now you can login with your new password.</p>`
                             };
                             transporter.sendMail(mailOptions, (error, info) => {
                                 if (error) {
@@ -60,8 +60,7 @@ router.post('/',(req,res,next)=>{
                                 }
                                 else{
                                 console.log('Message sent successfully!');
-                                res.redirect(`http://admin.toonvortex.com?passreset=true`);
-                                transporter.close();
+                                return res.redirect(`http://publisher.toonvortex.com?passreset=true`);
                                 }
                             });
                             })
@@ -69,9 +68,9 @@ router.post('/',(req,res,next)=>{
                             console.error(err);
                         });
             }
-        }
-        else{
-            res.redirect(`http://admin.toonvortex.com/forgot-password/verification?email=${email}&id=${hashpass}&verify=false`);
+            else{
+                res.redirect(`http://publisher.toonvortex.com/forgot-password/verification?email=${email}&id=${hashpass}&verify=false`);
+            }
         }
     })
 })

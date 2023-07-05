@@ -34,7 +34,7 @@ router.get('/',(req,res,next)=>{
   });
     var id = req.query.id;
     User.deleteOne({_id:id}).then((results) => {
-        res.redirect('http://staff.toonvortex.com/view-users');
+        res.redirect('http://admin.toonvortex.com/view-users');
       }).catch((err) => {
           console.log(err);
       });

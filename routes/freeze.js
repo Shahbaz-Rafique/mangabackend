@@ -39,7 +39,7 @@ router.get('/',(req,res,next)=>{
         "status": status,
     }).exec()
             .then((doc)=>{
-                res.redirect('http://admin.toonvortex.com/view-users');
+                res.redirect('http://staff.toonvortex.com/view-users');
                 })
             .catch((err) => {
                 console.error(err);

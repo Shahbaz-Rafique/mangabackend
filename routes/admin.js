@@ -67,22 +67,7 @@ router.post('/',(req,res,next)=>{
             }
         }
         else if(results.length==0){
-          Publisher.find({email:emails,password:passwordHex}).then((results) => {
-            if(results.length==1 && results[0].Role=="Publisher"){
-                res.redirect(`http://admin.toonvortex.com/publisher-home?email=${emails}&img=${results[0].profileimage}&id=${results[0]._id}&role=${results[0].Role}`);
-            }
-            else if(results.length==1 && results[0].Role=="Admin"){
-              res.redirect(`http://admin.toonvortex.com/admin-home?email=${emails}&img=${results[0].profileimage}&id=${results[0]._id}&role=${results[0].Role}`);
-            }
-            else if(results.length==1 && results[0].Role=="Moderator"){
-              res.redirect(`http://admin.toonvortex.com/moderator-home?email=${emails}&img=${results[0].profileimage}&id=${results[0]._id}&role=${results[0].Role}`);
-            }
-            else if(results.length==0){
-                res.redirect('http://admin.toonvortex.com/?login=false')
-            }
-          }).catch((err) => {
-            console.log(err);
-          });
+          res.redirect('http://admin.toonvortex.com/?login=false')
         }
       }).catch((err) => {
         console.log(err);

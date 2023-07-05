@@ -9,11 +9,23 @@ const User=mongoose.model('users',{
         type:String,
         required:true,
     },
+    uniquename:{
+        type:String,
+        required:true,
+    },
+    image:{
+        type:String,
+        required:true,
+    },
     emails:{
         type:String,
         required:true,
     },
     password:{
+        type:String,
+        required:true,
+    },
+    dob:{
         type:String,
         required:true,
     },
@@ -284,6 +296,10 @@ const Comment=mongoose.model('comments',{
         required:true,
     },
     name:{
+        type:String,
+        required:true,
+    },
+    image:{
         type:String,
         required:true,
     },

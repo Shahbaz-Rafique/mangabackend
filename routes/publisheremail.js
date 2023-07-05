@@ -47,11 +47,11 @@ router.post('/',(req,res,next)=>{
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.log('Error occurred:', error.message);
-            return res.redirect('http://admin.toonvortex.com/publisher-email?send=false');
+            return res.redirect('http://publisher.toonvortex.com/publisher-email?send=false');
         }
         else{
             console.log('Message sent successfully!');
-            return res.redirect('http://admin.toonvortex.com/publisher-email?send=true');
+            return res.redirect('http://publisher.toonvortex.com/publisher-email?send=true');
             transporter.close();
             
         }

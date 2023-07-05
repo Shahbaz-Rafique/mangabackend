@@ -102,7 +102,7 @@ router.post('/',multipleupload,(req,res,next)=>{
       from: 'Manga Support',
       to: email,
       subject: `Registered as a ${role}!`,
-      html: '<p>Hy '+name+'</p><p>you have been registered as a '+ role +' of Mangas World. You credentials are following</p><p>Username: '+email+'</p><p>Password: '+password+'</p><p>Use this login credential to open your mangas world publisher account.',
+      html: '<p>Hy '+name+'</p><p>you have been registered as a '+ role +' of Mangas World. You credentials are following</p><p>Username: '+email+'</p><p>Password: '+password+'</p><p>Use this login credential to open your mangas world '+ role +' account.',
     };
     db.collection('publishers').insertOne(data, (err, collection) => {
       if(err){
