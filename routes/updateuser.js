@@ -64,7 +64,7 @@ router.post("/", upload.single("profile"), (req, res, next) => {
     )
       .exec()
       .then((doc) => {
-        res.redirect("http://staff.toonvortex.com/view-users");
+        res.redirect("http://admin.toonvortex.com/view-users");
       })
       .catch((err) => {
         console.error(err);
@@ -81,7 +81,7 @@ router.post("/", upload.single("profile"), (req, res, next) => {
     )
       .exec()
       .then((doc) => {
-        res.redirect("http://staff.toonvortex.com/view-users");
+        res.redirect("http://admin.toonvortex.com/view-users");
       })
       .catch((err) => {
         console.error(err);
