@@ -74,7 +74,13 @@ router.post('/',multipleupload,(req,res,next)=>{
     var twitter=req.body.twitter;
     var instagram=req.body.insta;
     var role=req.query.role;
-    var imagefile=req.files.profile[0].filename;
+    var imagefile="";
+    if(req.query.img=="file"){
+      imagefile=req.files.profile[0].filename;
+    }
+    else{
+      imagefile=req.query.img;
+    }
     var examplefile=req.files.example[0].filename;
     var password=generateRandomPassword();
     const currentDate = new Date().toISOString().split('T')[0]
